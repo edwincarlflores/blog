@@ -1,7 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import ReactMarkdown from "react-markdown";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import NotionService from "../../services/notion-service";
 import { BlogPost } from "../../@types/notion";
 
@@ -24,6 +23,10 @@ const SEOWrapper: React.FC<{ children: React.ReactNode; post: BlogPost }> = ({
         content={post.description}
       />
       <meta name={"og:image"} title={"og:image"} content={post.cover} />
+      <meta
+        name="google-site-verification"
+        content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION_KEY}
+      />
     </Head>
 
     <div className="min-h-screen">
@@ -36,12 +39,6 @@ const Post = ({
   markdown,
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <h2>Loading...</h2>;
-  }
-
   return (
     <SEOWrapper post={post}>
       <div className="flex items-center justify-center">
@@ -84,7 +81,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
 

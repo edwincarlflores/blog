@@ -25,6 +25,10 @@ const SEOWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
         title="description"
         content="Blogsite of Edwin Carl Flores"
       />
+      <meta
+        name="google-site-verification"
+        content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION_KEY}
+      />
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
