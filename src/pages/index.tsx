@@ -1,6 +1,7 @@
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
 import type { BlogPost } from "../@types/notion";
+import BlogCard from "../components/BlogCard";
 import NotionService from "../services/notion-service";
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -15,32 +16,40 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
+const SEOWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <>
+    <Head>
+      <title>ECBF Blog</title>
+      <meta
+        name="description"
+        title="description"
+        content="Blogsite of Edwin Carl Flores"
+      />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+
+    <main className="min-h-screen">{children}</main>
+  </>
+);
+
 const Home: NextPage = ({
   posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const title = "Test Blog";
-  const description = "Welcome to my Notion Blog";
-
   return (
-    <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" title="description" content={description} />
-      </Head>
-
-      <main className="min-h-screen">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex items-center justify-center">
-            <h1 className="text-xl font-extrabold text-center text-black md:text-4xl">
-              Notion Blog
-            </h1>
-          </div>
+    <SEOWrapper>
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-center justify-center">
+          <h1 className="text-xl font-extrabold text-center text-black md:text-4xl">
+            ECBF Blog
+          </h1>
+        </div>
+        <div className="grid max-w-lg gap-6 mx-auto mt-12 lg:grid-cols-2 lg:max-w-none">
           {posts.map((post: BlogPost) => (
-            <p key={post.id}>Blog Post Component will go here: {post.title}</p>
+            <BlogCard key={post.id} post={post} />
           ))}
         </div>
-      </main>
-    </>
+      </div>
+    </SEOWrapper>
   );
 };
 

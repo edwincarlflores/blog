@@ -130,7 +130,7 @@ export default class NotionService {
       cover,
       title: name.results[0]?.title.plain_text || "",
       tags: tags.multi_select,
-      description: description.results[0]?.plain_text || "",
+      description: description.results[0]?.rich_text?.plain_text || "",
       date: updated.last_edited_time,
       slug: slug.formula.string,
     };
